@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل متطوع</title>
+    <!-- إضافة اللوجو (Favicon) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logoo.jpg') }}">
+            
+    <!-- روابط CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <style>
+        body {
+            background-image: url('/static/uploads/pg5.jpg');
+            background-size: cover;
+            background-attachment: scroll;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0);
+            padding: 30px;
+            border-radius: 12px;
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
+            max-width: 600px;
+            width: 100%;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #101111;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="form-container" data-aos="fade-up">
+        <h2 class="mb-4" data-aos="fade-down">تسجيل كمتطوع</h2>
+        <form action="/register" method="POST" enctype="multipart/form-data">
+            <div class="mb-3" data-aos="fade-right">
+                <label for="name" class="form-label">الاسم</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3" data-aos="fade-left">
+                <label for="specialization" class="form-label">التخصص</label>
+                <input type="text" class="form-control" id="specialization" name="specialization" required>
+            </div>
+            <div class="mb-3" data-aos="fade-right">
+                <label for="address" class="form-label">العنوان</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <div class="mb-3" data-aos="fade-left">
+                <label for="phone" class="form-label">رقم الهاتف</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3" data-aos="fade-right">
+                <label for="available_time">الأوقات المتاحة:</label>
+                <div class="d-flex">
+                    <input type="time" class="form-control me-2" id="available_time_start" name="available_time_start" required>
+                    <span class="mx-2">إلى</span>
+                    <input type="time" class="form-control ms-2" id="available_time_end" name="available_time_end" required>
+                </div>
+            </div>
+            <div class="mb-3" data-aos="fade-left">
+                <label for="photo" class="form-label">صورة المتطوع</label>
+                <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+            </div>
+            <div class="mb-3" data-aos="zoom-in">
+                <button type="submit" class="btn btn-primary w-100">تسجيل</button>
+            </div>
+            <div class="mb-3 text-center" data-aos="fade-up">
+                <a href="/" class="btn btn-secondary w-100">🔙 العودة للصفحة الرئيسية</a>
+            </div>
+            
+        </form>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // مدة الأنيميشن (1 ثانية)
+            once: true, // تشغيل الأنيميشن مرة واحدة فقط
+            offset: 100 // متى يبدأ التأثير عند التمرير
+        });
+    </script>
+
+</body>
+</html>
