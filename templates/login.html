@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <!-- إضافة اللوجو (Favicon) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logoo.jpg') }}">
+        
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- مكتبة AOS للأنيميشن -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/uploads/pg6.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* margin-top: -50px; */
+            /* padding-top: -50px; */
+            background-size: 100% 110%;
+        }
+        
+        .login-container {
+            /* background: rgba(255, 255, 255, 0.014); خلفية شفافة */
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 20px;
+            padding-top: 30px;
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
+            display: flex;
+            background-color: unset;
+        }
+
+        .login-image {
+            flex: 1;
+            background: url('/static/uploads/login-image.jpg') no-repeat center center;
+            background-size: cover;
+            min-height: 400px;
+        }
+
+        .login-form {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #101111;
+            text-align: center;
+        }
+        label{
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #101111;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            .login-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- العمود الأيسر: الصورة -->
+        <div class="login-image" data-aos="fade-right">
+            <img src="/static/uploads/logoo-removebg-preview.png" alt="صورة تسجيل الدخول">
+        </div>
+
+        <!-- العمود الأيمن: الفورم -->
+        <div class="login-form" data-aos="fade-left">
+            <h2>تسجيل الدخول</h2>
+            <form action="/login" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">الاسم</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">رقم التليفون</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <div class="mb-3">
+                    <button type="submit">تسجيل الدخول</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- تفعيل مكتبة AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    </script>
+
+</body>
+</html>
