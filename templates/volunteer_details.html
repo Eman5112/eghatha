@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المتطوع - {{ volunteer.name }}</title>
+    <!-- إضافة اللوجو (Favicon) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logoo.jpg') }}">
+        
+    <!-- روابط CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        body {
+            background-image: url('/static/uploads/pg2.jpg');
+            background-size: 110% 100%;
+            /* background-attachment: scroll; */
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg shadow-sm" data-aos="fade-down">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='/uploads/logoo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+                إغاثة
+            </a>
+        </div>
+    </nav>
+
+    <!-- تفاصيل المتطوع -->
+    <section class="container py-5">
+        <div class="row">
+            <!-- صورة المتطوع -->
+            <div class="col-md-4 text-center" data-aos="fade-right">
+                <img src="{{ url_for('static', filename='uploads/' + (volunteer.photo if volunteer.photo else 'default.jpg')) }}" 
+                     class="img-fluid rounded shadow" alt="صورة {{ volunteer.name }}" style="max-width: 300px;">
+            </div>
+
+            <!-- بيانات المتطوع -->
+            <div class="col-md-8" data-aos="fade-left">
+                <h2 class="mb-3">{{ volunteer.name }}</h2>
+                <p><strong>التخصص:</strong> {{ volunteer.specialization }}</p>
+                <p><strong>العنوان:</strong> {{ volunteer.address }}</p>
+                <p><strong>رقم الهاتف:</strong> <a href="tel:{{ volunteer.phone }}">{{ volunteer.phone }}</a></p>
+                <p>
+                    <strong>الأوقات المتاحة:</strong> 
+                    {% if volunteer.available_time_start and volunteer.available_time_end %}
+                        {{ volunteer.available_time_start.strftime('%I:%M') }} 
+                        {% if volunteer.available_time_start.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
+                        -
+                        {{ volunteer.available_time_end.strftime('%I:%M') }} 
+                        {% if volunteer.available_time_end.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
+                    {% else %}
+                        غير متاح حاليًا
+                    {% endif %}
+                </p>
+                
+                <a href="/index" class="btn btn-primary">العودة إلى القائمة</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ملفات JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+
+</body>
+</html>
