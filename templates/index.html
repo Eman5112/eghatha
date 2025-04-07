@@ -66,7 +66,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#about">عن المبادرة</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/register">تسجيل متطوع</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform">تسجيل متطوع</a></li>
                     <li class="nav-item"><a class="nav-link" href="#volunteers">المتطوعون</a></li>
                     <li class="nav-item"><a class="nav-link" href="#stats">احصائيات</a></li>
                     
@@ -84,7 +84,7 @@
                     <div class="container text-white text-center py-5">
                         <h1 class="display-4">إغاثة - منصة لمساعدة المرضى في منقباد</h1>
                         <p class="lead">نربط بين الأطباء والمرضى الذين يحتاجون للرعاية الصحية</p>
-                        <a href="/register" class="btn btn-light btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-light btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a>
                     </div>
                 </div>
             </div>
@@ -104,10 +104,26 @@
                 <li>🔹 دعم المجتمع وتعزيز الوعي الصحي.</li>
             </ul>
             <center>💚 <strong>كن جزءًا من التغيير، وساهم في إنقاذ الأرواح</strong><br><br>
-            <a href="/register" class="btn btn-primary btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a></center>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-primary btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a></center>
         </p>
     </section>
 
+    <!-- قسم كلمة المؤسس -->
+<section class="container py-5 text-center" id="founder" data-aos="fade-up">
+    <!-- <h2 class="mb-4">كلمة مؤسس المبادرة</h2> -->
+    <p class="lead fw-bold " style="max-width: 800px; margin: auto;">
+        نحن نؤمن بأن العطاء هو أساس بناء المجتمعات القوية، وأن كل خطوة صغيرة نحو الخير تُحدث فرقًا كبيرًا.<br>
+        مبادرتنا انطلقت برؤية واضحة: مساعدة من يحتاج، ونشر الوعي، وتعزيز روح التضامن.<br>
+        معًا، نستطيع أن نصنع تأثيرًا حقيقيًا ونبني مستقبلاً أكثر إشراقًا.
+    </p>
+    
+    <div class="mt-5">
+        <img src="{{ url_for('static', filename='uploads/WhatsApp Image 2025-04-07 at 18.21.41_04d14c85.jpg') }}" alt="مؤسس المبادرة" 
+             class="rounded-circle shadow" style="width: 200px; height: 200px; object-fit: cover;">
+        <h4 class="mt-3 mb-1">باسم حمادة حسن</h4>
+        <p class="fw-bold">مؤسس المبادرة</p>
+    </div>
+</section>
 
     <!-- قسم الإحصائيات -->
     <section id="stats" class="container py-5 animate__animated animate__fadeInUp">
@@ -170,7 +186,87 @@
             {% endfor %}
         </div>
     </section>
-    
+     <!-- قسم الأسئلة المتكررة -->
+<section class="container py-5" id="faq" data-aos="fade-up">
+    <h2 class="text-center mb-4">الأسئلة المتكررة</h2>
+
+    <div class="accordion" id="faqAccordion">
+        
+                <!-- السؤال الثاني -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeadingTwo">
+                        <button class="accordion-button collapsed text-end" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                            ما هي خدمات مبادرة اغاثة؟
+                        </button>
+                    </h2>
+                    <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            تقدم مبادرة اغاثة منصة لعرض بيانات الأطباء والممرضين، مما يساعد المرضى على طلب المساعدة الطبية في أي وقت.
+                        </div>
+                    </div>
+                </div>
+        <!-- السؤال الأول -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne">
+                    من يمكنه التسجيل كمتطوع؟
+                </button>
+            </h2>
+            <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    يمكن لأي شخص لديه خبرة طبية أو رغبة في المساعدة في تنظيم الخدمات أو التوعية الصحية أن يتقدم للتطوع.
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                    كيف يمكنني العثور على ممرض أو طبيب من خلال موقعكم؟ 
+                </button>
+            </h2>
+            <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    يمكنك زيارة الموقع والبحث عن الأطباء أو الممرضين المتاحين حسب التخصص والخدمات التي تحتاجها.                
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                    هل يمكن للممارسين الطبيين التسجيل في الموقع؟                </button>
+            </h2>
+            <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    نعم، يتيح الموقع للأطباء والممرضين تسجيل معلوماتهم وعرض بياناتهم للمرضى.                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive">
+                    ما هي المعلومات المطلوبة لتسجيل طبيب أو مريض؟                </button>
+            </h2>
+            <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    يتطلب تسجيل الطبيب أو المريض تقديم اسم المستخدم، البيانات الشخصية، ومعلومات الاتصال الأساسية لضمان التواصل الفعال.                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseSix" aria-expanded="false" aria-controls="faqCollapseSix">
+                    كيف يمكنني التواصل مع فريق المبادرة؟
+                </button>
+            </h2>
+            <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    يمكنك التواصل معنا عبر فيسبوك، واتساب، أو من خلال البريد الإلكتروني المتاح أسفل الصفحة.
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</section>
 
     <!-- الفوتر -->
     <footer id="footer" class="bg-dark text-white text-center py-4" data-aos="fade-in">
