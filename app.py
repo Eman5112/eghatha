@@ -69,9 +69,15 @@ def visitor_register():
 ### 🔹 الصفحة الرئيسية بعد تسجيل الدخول
 @app.route('/index')
 def index():
+    specialization = request.args.get('specialization', '').strip()
     volunteer_count = Volunteer.query.count()
     visitor_count = Visitor.query.count()
-    volunteers = Volunteer.query.all()
+
+    if specialization:
+        volunteers = Volunteer.query.filter(Volunteer.specialization.contains(specialization)).all()
+    else:
+        volunteers = Volunteer.query.all()
+
     return render_template('index.html', volunteers=volunteers, volunteer_count=volunteer_count, visitor_count=visitor_count)
 
 ### 🔹 تسجيل المتطوعين
