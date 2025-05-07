@@ -37,6 +37,17 @@ class Visitor(db.Model):
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False, unique=True)
 
+
+# نموذج المستشفيات
+class Hospital(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    info = db.Column(db.Text, nullable=True)  # معلومات إضافية عن المستشفى
+    photo = db.Column(db.String(200), nullable=True, default='hospital_default.jpg')
+
+
 # إنشاء قاعدة البيانات
 with app.app_context():
     db.create_all()
@@ -72,13 +83,16 @@ def index():
     specialization = request.args.get('specialization', '').strip()
     volunteer_count = Volunteer.query.count()
     visitor_count = Visitor.query.count()
+    hospital_count = Hospital.query.count()
+    hospitals = Hospital.query.all()
 
     if specialization:
         volunteers = Volunteer.query.filter(Volunteer.specialization.contains(specialization)).all()
     else:
         volunteers = Volunteer.query.all()
 
-    return render_template('index.html', volunteers=volunteers, volunteer_count=volunteer_count, visitor_count=visitor_count)
+    return render_template('index.html', volunteers=volunteers, volunteer_count=volunteer_count, 
+                          visitor_count=visitor_count, hospitals=hospitals, hospital_count=hospital_count)
 
 ### 🔹 تسجيل المتطوعين
 @app.route('/register', methods=['GET', 'POST'])
@@ -117,6 +131,81 @@ def volunteer_details(volunteer_id):
     volunteer = Volunteer.query.get_or_404(volunteer_id)
     return render_template('volunteer_details.html', volunteer=volunteer)
 
+### 🔹 تسجيل المستشفيات
+@app.route('/add_hospital', methods=['GET', 'POST'])
+def add_hospital():
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+        
+    if request.method == 'POST':
+        name = request.form['name']
+        address = request.form['address']
+        phone = request.form['phone']
+        info = request.form['info']
+        photo = request.files.get('photo')
+
+        filename = 'hospital_default.jpg'
+        if photo and photo.filename != '':
+            filename = secure_filename(photo.filename)
+            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            photo.save(photo_path)
+
+        new_hospital = Hospital(
+            name=name, address=address, phone=phone, info=info, photo=filename
+        )
+        db.session.add(new_hospital)
+        db.session.commit()
+
+        flash("تم إضافة المستشفى بنجاح!", "success")
+        return redirect(url_for('dashboard'))
+
+    return render_template('add_hospital.html')
+
+### 🔹 عرض تفاصيل المستشفى
+@app.route('/hospital/<int:hospital_id>')
+def hospital_details(hospital_id):
+    hospital = Hospital.query.get_or_404(hospital_id)
+    return render_template('hospital_details.html', hospital=hospital)
+
+### 🔹 تعديل بيانات المستشفى
+@app.route('/edit_hospital/<int:hospital_id>', methods=['GET', 'POST'])
+def edit_hospital(hospital_id):
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+
+    hospital = Hospital.query.get_or_404(hospital_id)
+    
+    if request.method == 'POST':
+        hospital.name = request.form['name']
+        hospital.address = request.form['address']
+        hospital.phone = request.form['phone']
+        hospital.info = request.form['info']
+        
+        photo = request.files.get('photo')
+        if photo and photo.filename != '':
+            filename = secure_filename(photo.filename)
+            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            photo.save(photo_path)
+            hospital.photo = filename
+            
+        db.session.commit()
+        flash("تم تعديل بيانات المستشفى بنجاح!", "success")
+        return redirect(url_for('dashboard'))
+
+    return render_template('edit_hospital.html', hospital=hospital)
+
+### 🔹 حذف مستشفى
+@app.route('/delete_hospital/<int:hospital_id>')
+def delete_hospital(hospital_id):
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+        
+    hospital = Hospital.query.get_or_404(hospital_id)
+    db.session.delete(hospital)
+    db.session.commit()
+    flash("تم حذف المستشفى بنجاح!", "success")
+    return redirect(url_for('dashboard'))
+
 ### 🔹 تسجيل دخول المشرف
 @app.route('/admin', methods=['GET', 'POST'])
 def admin_login():
@@ -138,7 +227,8 @@ def dashboard():
     if 'admin' in session:
         volunteers = Volunteer.query.all()
         visitors = Visitor.query.all()
-        return render_template('dashboard.html', volunteers=volunteers, visitors=visitors)
+        hospitals = Hospital.query.all()
+        return render_template('dashboard.html', volunteers=volunteers, visitors=visitors, hospitals=hospitals)
 
     return redirect(url_for('admin_login'))
 
