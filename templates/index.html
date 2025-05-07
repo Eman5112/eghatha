@@ -148,7 +148,28 @@
         </div>
     </section>
     
-    
+    <!-- قسم المستشفيات -->
+    <section id="hospitals" class="container py-5">
+        <h2 class="text-center mb-4">المستشفيات</h2>
+        <div class="row">
+            {% for hospital in hospitals %}
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='uploads/' + (hospital.photo if hospital.photo else 'hospital_default.jpg')) }}" 
+                        class="card-img-top" alt="صورة المستشفى">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ hospital.name }}</h5>
+                        <p class="card-text"><strong>العنوان:</strong> {{ hospital.address }}</p>
+                        <p class="card-text"><strong>رقم التواصل:</strong> {{ hospital.phone }}</p>
+                        <strong>ايام الاتاحه:</strong> <textarea class="form-control" rows="3" readonly>{{ hospital.info }}</textarea>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
 
 
     <!-- البحث عن المتطوعين -->
