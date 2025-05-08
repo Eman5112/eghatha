@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,59 +12,415 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Google Fonts for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            background-image: url('/static/uploads/pg2.jpg');
-            background-size: 110% 100%;
-            /* background-attachment: scroll; */
+        :root {
+            --primary-color: #2e6da4;
+            --secondary-color: #5bc0de;
+            --accent-color: #f0ad4e;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --success-color: #5cb85c;
         }
         
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-image: url('/static/uploads/pg2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: var(--secondary-color);
+        }
+        
+        .logo-img {
+            height: 50px;
+            border-radius: 8px;
+        }
+        
+        .volunteer-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 40px 0;
+        }
+        
+        .volunteer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .volunteer-image-container {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .volunteer-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease;
+        }
+        
+        .volunteer-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .volunteer-details {
+            padding: 30px;
+        }
+        
+        .volunteer-name {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .volunteer-name::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .info-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(-5px);
+        }
+        
+        .info-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-left: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .info-text {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        .info-text strong {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+        
+        .phone-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .phone-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        .available-time {
+            background-color: #e8f4f8;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-right: 4px solid var(--secondary-color);
+        }
+        
+        .available-time-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .time-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--light-color);
+            border-radius: 20px;
+            margin: 5px 0;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .btn-back {
+            margin-top: 30px;
+            padding: 10px 25px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-back:hover {
+            background-color: #1d5087;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-back i {
+            margin-left: 10px;
+        }
+        
+        .contact-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .contact-button:hover {
+            transform: scale(1.1);
+            background-color: #e09426;
+        }
+        
+        .contact-button i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .volunteer-card {
+                margin: 20px 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .volunteer-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .volunteer-name {
+                font-size: 1.8rem;
+            }
+            
+            .info-item {
+                padding: 8px 12px;
+            }
+            
+            .info-icon {
+                font-size: 1rem;
+            }
+            
+            .info-text {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .volunteer-details {
+                padding: 20px;
+            }
+            
+            .volunteer-name {
+                font-size: 1.5rem;
+            }
+            
+            .volunteer-image-container {
+                padding: 20px;
+            }
+            
+            .volunteer-image {
+                width: 120px;
+                height: 120px;
+                border-width: 3px;
+            }
+            
+            .btn-back {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- شريط التنقل -->
-    <nav class="navbar navbar-expand-lg shadow-sm" data-aos="fade-down">
+    <nav class="navbar navbar-expand-lg shadow-sm" data-aos="fade-down" data-aos-duration="800">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="{{ url_for('static', filename='/uploads/logoo-removebg-preview.png') }}" alt="Logo" class="logo-img">
-                إغاثة
+                <span>إغاثة</span>
             </a>
         </div>
     </nav>
 
     <!-- تفاصيل المتطوع -->
     <section class="container py-5">
-        <div class="row">
-            <!-- صورة المتطوع -->
-            <div class="col-md-4 text-center" data-aos="fade-right">
-                <img src="{{ url_for('static', filename='uploads/' + (volunteer.photo if volunteer.photo else 'default.jpg')) }}" 
-                     class="img-fluid rounded shadow" alt="صورة {{ volunteer.name }}" style="max-width: 300px;">
-            </div>
+        <div class="volunteer-card" data-aos="fade-up" data-aos-duration="1000">
+            <div class="row g-0">
+                <!-- صورة المتطوع -->
+                <div class="col-lg-4">
+                    <div class="volunteer-image-container h-100" data-aos="fade-right" data-aos-delay="200">
+                        <img src="{{ url_for('static', filename='uploads/' + (volunteer.photo if volunteer.photo else 'default.jpg')) }}" 
+                            class="volunteer-image" alt="صورة {{ volunteer.name }}">
+                    </div>
+                </div>
 
-            <!-- بيانات المتطوع -->
-            <div class="col-md-8" data-aos="fade-left">
-                <h2 class="mb-3">{{ volunteer.name }}</h2>
-                <p><strong>التخصص:</strong> {{ volunteer.specialization }}</p>
-                <p><strong>العنوان:</strong> {{ volunteer.address }}</p>
-                <p><strong>رقم الهاتف:</strong> <a href="tel:{{ volunteer.phone }}">{{ volunteer.phone }}</a></p>
-                <p>
-                    <strong>الأوقات المتاحة:</strong> 
-                    {% if volunteer.available_time_start and volunteer.available_time_end %}
-                        {{ volunteer.available_time_start.strftime('%I:%M') }} 
-                        {% if volunteer.available_time_start.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
-                        -
-                        {{ volunteer.available_time_end.strftime('%I:%M') }} 
-                        {% if volunteer.available_time_end.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
-                    {% else %}
-                        غير متاح حاليًا
-                    {% endif %}
-                </p>
-                
-                <a href="/index" class="btn btn-primary">العودة إلى القائمة</a>
+                <!-- بيانات المتطوع -->
+                <div class="col-lg-8">
+                    <div class="volunteer-details" data-aos="fade-left" data-aos-delay="400">
+                        <h2 class="volunteer-name">{{ volunteer.name }}</h2>
+                        
+                        <div class="info-item" data-aos="fade-up" data-aos-delay="500">
+                            <i class="fas fa-user-graduate info-icon"></i>
+                            <div class="info-text"><strong>التخصص:</strong> {{ volunteer.specialization }}</div>
+                        </div>
+                        
+                        <div class="info-item" data-aos="fade-up" data-aos-delay="600">
+                            <i class="fas fa-map-marker-alt info-icon"></i>
+                            <div class="info-text"><strong>العنوان:</strong> {{ volunteer.address }}</div>
+                        </div>
+                        
+                        <div class="info-item" data-aos="fade-up" data-aos-delay="700">
+                            <i class="fas fa-phone-alt info-icon"></i>
+                            <div class="info-text">
+                                <strong>رقم الهاتف:</strong> 
+                                <a href="tel:{{ volunteer.phone }}" class="phone-link">{{ volunteer.phone }}</a>
+                            </div>
+                        </div>
+                        
+                        <div class="available-time" data-aos="fade-up" data-aos-delay="800">
+                            <div class="available-time-title">
+                                <i class="far fa-clock" style="color: var(--secondary-color);"></i>
+                                <span>الأوقات المتاحة:</span>
+                            </div>
+                            
+                            {% if volunteer.available_time_start and volunteer.available_time_end %}
+                                <div class="time-badge">
+                                    {{ volunteer.available_time_start.strftime('%I:%M') }} 
+                                    {% if volunteer.available_time_start.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
+                                    -
+                                    {{ volunteer.available_time_end.strftime('%I:%M') }} 
+                                    {% if volunteer.available_time_end.strftime('%p') == "AM" %} صباحًا {% else %} مساءً {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="time-badge">غير متاح حاليًا</div>
+                            {% endif %}
+                        </div>
+                        
+                        <a href="/index" class="btn btn-primary btn-back" data-aos="fade-up" data-aos-delay="900">
+                            <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- زر التواصل السريع -->
+    <a href="tel:{{ volunteer.phone }}" class="contact-button" data-aos="fade-up" data-aos-delay="1200">
+        <i class="fas fa-phone-alt"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer data-aos="fade-up" data-aos-delay="300">
+        <div class="container">
+            <p class="mb-0">© 2025 إغاثة - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
 
     <!-- ملفات JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -72,9 +428,36 @@
     <script>
         AOS.init({
             duration: 1000,
-            once: true
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+        
+        // Add scroll reveal animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if elements are in viewport
+            const inViewport = (elem) => {
+                const bounding = elem.getBoundingClientRect();
+                return (
+                    bounding.top >= 0 &&
+                    bounding.left >= 0 &&
+                    bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            };
+            
+            // Add fade-in-up class to elements in viewport
+            const fadeElems = document.querySelectorAll('.info-item');
+            window.addEventListener('scroll', () => {
+                fadeElems.forEach(elem => {
+                    if (inViewport(elem)) {
+                        elem.classList.add('fade-in-up');
+                    }
+                });
+            });
+            
+            // Trigger scroll once to check initial state
+            window.dispatchEvent(new Event('scroll'));
         });
     </script>
-
 </body>
 </html>
