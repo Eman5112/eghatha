@@ -1,113 +1,329 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
-    <!-- إضافة اللوجو (Favicon) -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logoo.jpg') }}">
-        
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- مكتبة AOS للأنيميشن -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-radius: 16px;
+            --box-shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-image: url('/static/uploads/pg6.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* margin-top: -50px; */
-            /* padding-top: -50px; */
-            background-size: 100% 110%;
+            padding: 20px;
         }
         
         .login-container {
-            /* background: rgba(255, 255, 255, 0.014); خلفية شفافة */
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
             overflow: hidden;
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
-            margin-top: 20px;
-            padding-top: 30px;
-            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
             display: flex;
-            background-color: unset;
+            box-shadow: var(--box-shadow);
+            position: relative;
         }
-
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+        
         .login-image {
             flex: 1;
-            background: url('/static/uploads/login-image.jpg') no-repeat center center;
-            background-size: cover;
-            min-height: 400px;
+            background: linear-gradient(45deg, #4361ee, #4895ef);
+            padding: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-
+        
+        .login-image::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40%;
+            top: -50%;
+            left: -50%;
+            animation: rotate 30s infinite linear;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
         .login-image img {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
-            margin: auto;
-            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
         }
-
+        
         .login-form {
             flex: 1;
-            padding: 30px;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
+        
+        .logo-small {
+            width: 80px;
+            margin: 0 auto 20px;
+            display: none;
+        }
+        
         h2 {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #101111;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color);
             text-align: center;
+            margin-bottom: 30px;
+            position: relative;
         }
-        label{
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #101111;
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            margin: 15px auto 0;
+            border-radius: 2px;
         }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            transition: var(--transition);
+        }
+        
         input[type="text"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            padding: 15px 20px 15px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f9f9f9;
         }
-
+        
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+            background-color: #fff;
+        }
+        
+        input[type="text"]:focus + i {
+            color: var(--primary-color);
+        }
+        
         button[type="submit"] {
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: var(--light-text);
             border: none;
-            border-radius: 4px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            transition: background 0.3s;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
         }
-
+        
         button[type="submit"]:hover {
-            background-color: #0056b3;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
         }
-
+        
+        button[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+        }
+        
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .social-login p {
+            color: #777;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            background: #ddd;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #f1f1f1;
+            color: #555;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icons a.fb:hover {
+            background: #3b5998;
+            color: white;
+        }
+        
+        .social-icons a.google:hover {
+            background: #db4437;
+            color: white;
+        }
+        
+        .social-icons a.twitter:hover {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .extra-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .extra-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .extra-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 992px) {
+            .login-container {
+                max-width: 90%;
+            }
+        }
+        
         @media (max-width: 768px) {
             .login-container {
                 flex-direction: column;
-                align-items: center;
+                max-width: 95%;
             }
+            
             .login-image {
-                height: 200px;
+                height: 220px;
+                padding: 20px;
+            }
+            
+            .login-form {
+                padding: 30px 25px;
+            }
+            
+            .logo-small {
+                display: block;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-image {
+                height: 180px;
+            }
+            
+            .login-form {
+                padding: 25px 20px;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            input[type="text"],
+            button[type="submit"] {
+                padding: 12px;
             }
         }
     </style>
@@ -116,26 +332,39 @@
 
     <div class="login-container">
         <!-- العمود الأيسر: الصورة -->
-        <div class="login-image" data-aos="fade-right">
+        <div class="login-image" data-aos="fade-right" data-aos-duration="1200">
             <img src="/static/uploads/logoo-removebg-preview.png" alt="صورة تسجيل الدخول">
         </div>
 
         <!-- العمود الأيمن: الفورم -->
-        <div class="login-form" data-aos="fade-left">
+        <div class="login-form" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+            <img src="/static/uploads/logoo-removebg-preview.png" class="logo-small" alt="شعار">
             <h2>تسجيل الدخول</h2>
             <form action="/login" method="post">
-                <div class="mb-3">
-                    <label for="name" class="form-label">الاسم</label>
-                    <input type="text" id="name" name="name" required>
+                <div class="form-group">
+                    <label for="name">الاسم</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="name" name="name" placeholder="أدخل اسمك الكامل" required>
+                        <i class="fas fa-user"></i>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">رقم التليفون</label>
-                    <input type="text" id="phone" name="phone" required>
+                <div class="form-group">
+                    <label for="phone">رقم التليفون</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required>
+                        <i class="fas fa-phone"></i>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <button type="submit">تسجيل الدخول</button>
+                <div class="form-group">
+                    <button type="submit">
+                        تسجيل الدخول <i class="fas fa-sign-in-alt me-2"></i>
+                    </button>
                 </div>
             </form>
+            
+            
+            
+            
         </div>
     </div>
 
@@ -146,7 +375,18 @@
             duration: 1000,
             once: true,
         });
+        
+        // إضافة تأثيرات إضافية
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('animate__animated', 'animate__pulse');
+            });
+            
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('animate__animated', 'animate__pulse');
+            });
+        });
     </script>
-
 </body>
 </html>
