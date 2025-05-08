@@ -1,327 +1,1157 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>إغاثة - المساعدة الطبية</title>
-    <!-- إضافة اللوجو (Favicon) -->
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logoo.jpg') }}">
-        
-    <!-- روابط CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* تحسين التصميم للهواتف */
-        .container, .w-50 {
-            max-width: 100% !important;
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #f8f9fa;
+            --accent-color: #dc3545;
+            --dark-color: #343a40;
+            --light-color: #ffffff;
+            --text-color: #333333;
+            --hover-color: #0b5ed7;
         }
-
-        .text-center {
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* General Styles */
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
             text-align: center;
+            font-weight: 700;
+            color: var(--primary-color);
         }
-
-        .header-bg {
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            border-color: var(--hover-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-accent:hover {
+            background-color: #bb2d3b;
+            border-color: #bb2d3b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+        
+        .navbar.scrolled {
+            padding: 8px 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+        
+        .logo-img {
+            height: 40px;
+            margin-left: 10px;
+        }
+        
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            padding: 10px 15px !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 5px;
+            right: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            right: auto;
+            left: 0;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(13, 110, 253, 0.7), rgba(13, 110, 253, 0.9)), url('static/uploads/p1.jpg');
             background-size: cover;
             background-position: center;
-        }
-
-        /* تعديل الأزرار والمسافات */
-        .btn {
-            margin: 5px;
-        }
-
-        /* تحسين عرض الصور */
-        .card-img-top {
-            width: 100%;
-            height: auto;
-        }
-
-        /* تحسين عرض شريط التنقل على الشاشات الصغيرة */
-        .navbar-collapse {
+            background-attachment: fixed;
+            color: white;
             text-align: center;
+            padding: 150px 0;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .footer-icons a {
-            margin: 0 5px;
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
         }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-btn {
+            animation: pulse 2s infinite;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .mission-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .mission-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-left: 15px;
+        }
+        
+        /* Founder Section */
+        .founder-section {
+            background-color: var(--secondary-color);
+        }
+        
+        .founder-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .founder-img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color), #0099ff);
+            color: white;
+        }
+        
+        .stats-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            padding: 40px 20px;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .stats-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .stats-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        /* Hospitals Section */
+        .hospital-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .hospital-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .hospital-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .hospital-info {
+            background-color: #f8f9fa;
+            border: none;
+            border-radius: 5px;
+            resize: none;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: linear-gradient(rgba(13, 110, 253, 0.9), rgba(13, 110, 253, 0.8)), url('static/uploads/p1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 60px 0;
+        }
+        
+        .search-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+        }
+        
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 50px;
+            padding: 12px 20px;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-btn {
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        
+        /* Volunteers Section */
+        .volunteer-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .volunteer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .volunteer-img {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .volunteer-card:hover .volunteer-img {
+            transform: scale(1.05);
+        }
+        
+        .volunteer-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .volunteer-btn {
+            border-radius: 50px;
+            width: 80%;
+            transition: all 0.3s ease;
+        }
+        
+        .volunteer-btn:hover {
+            width: 90%;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: #f8f9fa;
+        }
+        
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 10px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .accordion-button {
+            background-color: white;
+            font-weight: 600;
+            padding: 20px;
+            box-shadow: none !important;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .accordion-button:not(.collapsed)::after {
+            filter: brightness(0) invert(1);
+        }
+        
+        .accordion-body {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            right: 0;
+            border-radius: 2px;
+        }
+        
+        .footer-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+        }
+        
+        /* Floating Action Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 991px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-padding {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .about-section {
+                margin-top: -30px;
+                padding: 30px;
+            }
+            
+            .section-padding {
+                padding: 40px 0;
+            }
+            
+            .stats-number {
+                font-size: 2.5rem;
+            }
+            
+            .search-card {
+                padding: 20px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes floatUp {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .float-animation {
+            animation: floatUp 3s infinite ease-in-out;
+        }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Additional styles for the View All button */
+    .search-section .view-all-btn {
+        padding: 10px 20px;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .search-section .view-all-btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .search-section .view-all-btn:active {
+        transform: translateY(0);
+    }
+    
+    /* Make both buttons responsive */
+    @media (max-width: 576px) {
+        .text-center.d-flex {
+            flex-direction: column;
+            gap: 10px !important;
+        }
+        
+        .search-section .search-btn,
+        .search-section .view-all-btn {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 <body>
-    <!-- شريط التنقل -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" data-aos="fade-down">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="floating-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="سجل كمتطوع">
+        <i class="fas fa-plus"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="{{ url_for('static', filename='/uploads/logoo-removebg-preview.png') }}" alt="Logo" class="logo-img">
                 إغاثة
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">عن المبادرة</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform">تسجيل متطوع</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#volunteers">المتطوعون</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#stats">احصائيات</a></li>
-                    
-                    <li class="nav-item"><a class="nav-link" href="#footer">اتصل بنا</a></li>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hero">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">عن المبادرة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hospitals">المستشفيات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#volunteers">المتطوعون</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">إحصائيات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">الأسئلة الشائعة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">اتصل بنا</a>
+                    </li>
                 </ul>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-accent">سجل كمتطوع</a>
             </div>
         </div>
     </nav>
 
-    <!-- المقدمة -->
-    <header id="headerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-aos="zoom-in">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="header-bg" style="background-image: url('static/uploads/p1.jpg');">
-                    <div class="container text-white text-center py-5">
-                        <h1 class="display-4">إغاثة - منصة لمساعدة المرضى في منقباد</h1>
-                        <p class="lead">نربط بين الأطباء والمرضى الذين يحتاجون للرعاية الصحية</p>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-light btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- قسم عن المبادرة -->
-    <section id="about"  class="container py-5" data-aos="fade-left">
-        <h2 class="text-center mb-4">عن المبادرة</h2>
-        <p class="text-center">
-            إغاثة هي مبادرة إنسانية تهدف إلى تقديم الرعاية الصحية للمحتاجين في منقباد، من خلال ربطهم بالأطباء والمتخصصين المتطوعين.<br>
-            نؤمن بأن <strong>الصحة حق للجميع</strong>، ونسعى إلى توفير الدعم الطبي لمن لا يستطيعون الوصول إلى الخدمات الصحية بسهولة.<br>
-            <ul class="list-unstyled">
-                <li><strong>مهمتنا:</strong></li><br>
-                <li>🔹 تسهيل وصول المرضى إلى الأطباء المتطوعين.</li>
-                <li>🔹 تقديم استشارات طبية مجانية وخدمات صحية أساسية.</li>
-                <li>🔹 دعم المجتمع وتعزيز الوعي الصحي.</li>
-            </ul>
-            <center>💚 <strong>كن جزءًا من التغيير، وساهم في إنقاذ الأرواح</strong><br><br>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-primary btn-lg animate__pulse animate__infinite"><b> سجل كمتطوع</b></a></center>
-        </p>
-    </section>
-
-    <!-- قسم كلمة المؤسس -->
-<section class="container py-5 text-center" id="founder" data-aos="fade-up">
-    <!-- <h2 class="mb-4">كلمة مؤسس المبادرة</h2> -->
-    <p class="lead fw-bold " style="max-width: 800px; margin: auto;">
-        نحن نؤمن بأن العطاء هو أساس بناء المجتمعات القوية، وأن كل خطوة صغيرة نحو الخير تُحدث فرقًا كبيرًا.<br>
-        مبادرتنا انطلقت برؤية واضحة: مساعدة من يحتاج، ونشر الوعي، وتعزيز روح التضامن.<br>
-        معًا، نستطيع أن نصنع تأثيرًا حقيقيًا ونبني مستقبلاً أكثر إشراقًا.
-    </p>
-    
-    <div class="mt-5">
-        <img src="{{ url_for('static', filename='uploads/WhatsApp Image 2025-04-07 at 18.21.41_04d14c85.jpg') }}" alt="مؤسس المبادرة" 
-             class="rounded-circle shadow" style="width: 200px; height: 200px; object-fit: cover;">
-        <h4 class="mt-3 mb-1">باسم حمادة حسن</h4>
-        <p class="fw-bold">مؤسس المبادرة</p>
-    </div>
-</section>
-
-    <!-- قسم الإحصائيات -->
-    <section id="stats" class="container py-5 animate__animated animate__fadeInUp">
-        <h2 class="text-center mb-4">إحصائيات</h2>
-        <div class="row text-center">
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 animate__animated animate__fadeInUp">
-                    <div class="card-body">
-                        <h3 class="card-title">عدد المتطوعين</h3>
-                        <p class="display-4">{{ volunteer_count }}</p> <!-- عرض عدد المتطوعين -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 animate__animated animate__fadeInUp">
-                    <div class="card-body">
-                        <h3 class="card-title">عدد الزوار</h3>
-                        <p class="display-4">{{ visitor_count }}</p> <!-- عرض عدد الزوار -->
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">إغاثة - منصة لمساعدة المرضى في منقباد</h1>
+                <p class="hero-subtitle">نربط بين الأطباء والمرضى الذين يحتاجون للرعاية الصحية</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-light hero-btn">
+                    <i class="fas fa-user-plus me-2"></i> سجل كمتطوع
+                </a>
             </div>
         </div>
     </section>
-    
-    <!-- قسم المستشفيات -->
-    <section id="hospitals" class="container py-5">
-        <h2 class="text-center mb-4">المستشفيات</h2>
-        <div class="row">
-            {% for hospital in hospitals %}
-            <div class="col-md-4 mb-4" data-aos="fade-up">
-                <div class="card h-100">
-                    <img src="{{ url_for('static', filename='uploads/' + (hospital.photo if hospital.photo else 'hospital_default.jpg')) }}" 
-                        class="card-img-top" alt="صورة المستشفى">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ hospital.name }}</h5>
-                        <p class="card-text"><strong>العنوان:</strong> {{ hospital.address }}</p>
-                        <p class="card-text"><strong>رقم التواصل:</strong> {{ hospital.phone }}</p>
-                        <strong>ايام الاتاحه:</strong> <textarea class="form-control" rows="3" readonly>{{ hospital.info }}</textarea>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
 
-
-
-    <!-- البحث عن المتطوعين -->
-    <section id="search" class="container py-5" data-aos="slide-up">
-        <h2 class="text-center">البحث عن متطوع حسب التخصص</h2>
-        <br>
-        <form method="GET" action="/index#search" class="w-50 mx-auto">
-            <div class="mb-3">
-                <label for="search_specialization" class="form-label">التخصص</label>
-                <input type="text" class="form-control" id="search_specialization" name="specialization">
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-danger form-control">بحث</button>
-            </div>
-        </form>
-    </section>
-
-    <!-- قائمة المتطوعين -->
-    <section id="volunteers" class="container py-5">
-        <h2 class="text-center" data-aos="fade-right">المتطوعون</h2>
-        <br>
-        <div class="row">
-            {% for volunteer in volunteers %}
-            <div class="col-md-4 mb-4" data-aos="fade-up">
-                <div class="card h-100">
-                    <img src="{{ url_for('static', filename='uploads/' + (volunteer.photo if volunteer.photo else 'default.jpg')) }}" 
-                         class="card-img-top" alt="صورة المتطوع">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ volunteer.name }}</h5>
-                        <p class="card-text"><strong>التخصص:</strong> {{ volunteer.specialization }}</p>
-                        <a href="{{ url_for('volunteer_details', volunteer_id=volunteer.id) }}" class="btn btn-danger">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-     <!-- قسم الأسئلة المتكررة -->
-<section class="container py-5" id="faq" data-aos="fade-up">
-    <h2 class="text-center mb-4">الأسئلة المتكررة</h2>
-
-    <div class="accordion" id="faqAccordion">
-        
-                <!-- السؤال الثاني -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faqHeadingTwo">
-                        <button class="accordion-button collapsed text-end" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
-                            ما هي خدمات مبادرة اغاثة؟
-                        </button>
-                    </h2>
-                    <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            تقدم مبادرة اغاثة منصة لعرض بيانات الأطباء والممرضين، مما يساعد المرضى على طلب المساعدة الطبية في أي وقت.
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="about-section">
+                        <h2 class="section-title">عن المبادرة</h2>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="about-content" data-aos="fade-left" data-aos-delay="100">
+                                    <p class="lead">
+                                        إغاثة هي مبادرة إنسانية تهدف إلى تقديم الرعاية الصحية للمحتاجين في منقباد، من خلال ربطهم بالأطباء والمتخصصين المتطوعين.
+                                    </p>
+                                    <p>
+                                        نؤمن بأن <strong>الصحة حق للجميع</strong>، ونسعى إلى توفير الدعم الطبي لمن لا يستطيعون الوصول إلى الخدمات الصحية بسهولة.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mission-list" data-aos="fade-right" data-aos-delay="200">
+                                    <h4 class="mb-3">مهمتنا:</h4>
+                                    <div class="mission-item">
+                                        <i class="fas fa-heartbeat mission-icon"></i>
+                                        <div>
+                                            <p>تسهيل وصول المرضى إلى الأطباء المتطوعين.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mission-item">
+                                        <i class="fas fa-stethoscope mission-icon"></i>
+                                        <div>
+                                            <p>تقديم استشارات طبية مجانية وخدمات صحية أساسية.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mission-item">
+                                        <i class="fas fa-hands-helping mission-icon"></i>
+                                        <div>
+                                            <p>دعم المجتمع وتعزيز الوعي الصحي.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <p class="lead fw-bold text-primary">💚 كن جزءًا من التغيير، وساهم في إنقاذ الأرواح</p>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSczRicI4vUeDl2qblC_BIGhxYotLWSgbBg0aNlMs5uDybdSsg/viewform" class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite">
+                                <i class="fas fa-user-plus me-2"></i> سجل كمتطوع
+                            </a>
                         </div>
                     </div>
                 </div>
-        <!-- السؤال الأول -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="faqHeadingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne">
-                    من يمكنه التسجيل كمتطوع؟
-                </button>
-            </h2>
-            <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                    يمكن لأي شخص لديه خبرة طبية أو رغبة في المساعدة في تنظيم الخدمات أو التوعية الصحية أن يتقدم للتطوع.
-                </div>
             </div>
         </div>
-        
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="faqHeadingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
-                    كيف يمكنني العثور على ممرض أو طبيب من خلال موقعكم؟ 
-                </button>
-            </h2>
-            <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                    يمكنك زيارة الموقع والبحث عن الأطباء أو الممرضين المتاحين حسب التخصص والخدمات التي تحتاجها.                
-                </div>
-            </div>
-        </div>
+    </section>
 
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="faqHeadingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
-                    هل يمكن للممارسين الطبيين التسجيل في الموقع؟                </button>
-            </h2>
-            <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                    نعم، يتيح الموقع للأطباء والممرضين تسجيل معلوماتهم وعرض بياناتهم للمرضى.                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="faqHeadingFive">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive">
-                    ما هي المعلومات المطلوبة لتسجيل طبيب أو مريض؟                </button>
-            </h2>
-            <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                    يتطلب تسجيل الطبيب أو المريض تقديم اسم المستخدم، البيانات الشخصية، ومعلومات الاتصال الأساسية لضمان التواصل الفعال.                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="faqHeadingSix">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseSix" aria-expanded="false" aria-controls="faqCollapseSix">
-                    كيف يمكنني التواصل مع فريق المبادرة؟
-                </button>
-            </h2>
-            <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                    يمكنك التواصل معنا عبر فيسبوك، واتساب، أو من خلال البريد الإلكتروني المتاح أسفل الصفحة.
-                </div>
-            </div>
-        </div>
-       
-    </div>
-</section>
-
-    <!-- الفوتر -->
-    <footer id="footer" class="bg-dark text-white text-center py-4" data-aos="fade-in">
+    <!-- Founder Section -->
+    <section id="founder" class="founder-section section-padding">
         <div class="container">
-            <p>تواصل معنا عبر:</p>
-            <div class="footer-icons d-flex justify-content-center gap-3">
-                <a href="https://www.facebook.com/share/1E9UeS38Wp/" target="_blank" class="text-white animate__animated animate__bounceIn">
-                    <i class="fab fa-facebook fa-2x"></i>
-                </a>
-                <a href="https://wa.me/+201060088286" target="_blank" class="text-white animate__animated animate__bounceIn">
-                    <i class="fab fa-whatsapp fa-2x"></i>
-                </a>
-                <a href="basemhamada641@gmail.com" class="text-white animate__animated animate__bounceIn">
-                    <i class="fas fa-envelope fa-2x"></i>
-                </a>
-                <a href="https://t.me/eghathaBot" target="_blank" class="text-white animate__animated animate__bounceIn">
-                    <i class="fab fa-telegram fa-2x"></i>
-                </a>
-                <a href="https://maps.app.goo.gl/8Y2GmxzE6nrcbGbu5?g_st=aw" target="_blank" class="text-white animate__animated animate__bounceIn">
-                    <i class="fas fa-map-marker-alt fa-2x"></i>
-                </a>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">كلمة المؤسس</h2>
+                    <div class="founder-image mb-4" data-aos="zoom-in">
+                        <img src="{{ url_for('static', filename='uploads/WhatsApp Image 2025-04-07 at 18.21.41_04d14c85.jpg') }}" alt="مؤسس المبادرة" class="rounded-circle founder-img">
+                    </div>
+                    <h4 class="mb-2">باسم حمادة حسن</h4>
+                    <p class="text-muted mb-4">مؤسس المبادرة</p>
+                    <div class="founder-quote" data-aos="fade-up">
+                        <p class="lead">
+                            نحن نؤمن بأن العطاء هو أساس بناء المجتمعات القوية، وأن كل خطوة صغيرة نحو الخير تُحدث فرقًا كبيرًا.
+                        </p>
+                        <p>
+                            مبادرتنا انطلقت برؤية واضحة: مساعدة من يحتاج، ونشر الوعي، وتعزيز روح التضامن. معًا، نستطيع أن نصنع تأثيرًا حقيقيًا ونبني مستقبلاً أكثر إشراقًا.
+                        </p>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
 
-        <p class="mt-3">&copy; 2025 جميع الحقوق محفوظة - إغاثة</p>
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section section-padding">
+        <div class="container">
+            <h2 class="section-title text-white">إحصائيات المبادرة</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stats-card text-center">
+                        <i class="fas fa-users stats-icon"></i>
+                        <div class="stats-number">{{ volunteer_count }}</div>
+                        <h3>عدد المتطوعين</h3>
+                        <p>أطباء وممرضين متطوعين يقدمون الخدمات الطبية</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stats-card text-center">
+                        <i class="fas fa-eye stats-icon"></i>
+                        <div class="stats-number">{{ visitor_count }}</div>
+                        <h3>عدد الزوار</h3>
+                        <p>زيارات للموقع من الباحثين عن الخدمة الطبية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hospitals Section -->
+    <section id="hospitals" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">المستشفيات المشاركة</h2>
+            <div class="row">
+                {% for hospital in hospitals %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="hospital-card">
+                        <img src="{{ url_for('static', filename='uploads/' + (hospital.photo if hospital.photo else 'hospital_default.jpg')) }}" 
+                            class="card-img-top hospital-img" alt="صورة المستشفى">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ hospital.name }}</h5>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                <p class="card-text mb-0">{{ hospital.address }}</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-phone-alt text-primary me-2"></i>
+                                <p class="card-text mb-0">{{ hospital.phone }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <p class="fw-bold mb-1">أيام الإتاحة:</p>
+                                <textarea class="form-control hospital-info" rows="3" readonly>{{ hospital.info }}</textarea>
+                            </div>
+                            <a href="tel:{{ hospital.phone }}" class="btn btn-primary w-100">
+                                <i class="fas fa-phone-alt me-2"></i> اتصل الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="search-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="search-card" data-aos="zoom-in">
+                        <h2 class="text-center mb-4">البحث عن متطوع حسب التخصص</h2>
+                        <form method="GET" action="/index#search">
+                            <div class="mb-4">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-0">
+                                        <i class="fas fa-search text-white"></i>
+                                    </span>
+                                    <input type="text" class="form-control search-input" id="search_specialization" name="specialization" placeholder="ادخل التخصص الطبي...">
+                                </div>
+                            </div>
+                            <div class="text-center d-flex justify-content-center gap-3">
+                                <button type="submit" class="btn btn-light search-btn">
+                                    <i class="fas fa-search me-2"></i> بحث
+                                </button>
+                                <a href="/index#volunteers" class="btn btn-outline-light view-all-btn">
+                                    <i class="fas fa-list-ul me-2"></i> عرض الكل
+                                </a>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Volunteers Section -->
+    <section id="volunteers" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">فريق المتطوعين</h2>
+            <div class="row">
+                {% for volunteer in volunteers %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="volunteer-card">
+                        <div class="position-relative overflow-hidden">
+                            <img src="{{ url_for('static', filename='uploads/' + (volunteer.photo if volunteer.photo else 'default.jpg')) }}" 
+                                class="card-img-top volunteer-img" alt="صورة المتطوع">
+                            <div class="volunteer-badge">{{ volunteer.specialization }}</div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">{{ volunteer.name }}</h5>
+                            <p class="card-text text-muted"> {{ volunteer.specialization }}</p>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ url_for('volunteer_details', volunteer_id=volunteer.id) }}" class="btn btn-accent volunteer-btn">
+                                    <i class="fas fa-user-md me-2"></i> عرض التفاصيل
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section section-padding">
+        <div class="container">
+            <h2 class="section-title">الأسئلة الشائعة</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="100">
+                            <h2 class="accordion-header" id="faqHeadingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne">
+                                    من يمكنه التسجيل كمتطوع؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    يمكن لأي شخص لديه خبرة طبية أو رغبة في المساعدة في تنظيم الخدمات أو التوعية الصحية أن يتقدم للتطوع.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
+                            <h2 class="accordion-header" id="faqHeadingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                                    ما هي خدمات مبادرة اغاثة؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    تقدم مبادرة اغاثة منصة لعرض بيانات الأطباء والممرضين، مما يساعد المرضى على طلب المساعدة الطبية في أي وقت.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
+                            <h2 class="accordion-header" id="faqHeadingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                                    كيف يمكنني العثور على ممرض أو طبيب من خلال موقعكم؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    يمكنك زيارة الموقع والبحث عن الأطباء أو الممرضين المتاحين حسب التخصص والخدمات التي تحتاجها.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
+                            <h2 class="accordion-header" id="faqHeadingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                    هل يمكن للممارسين الطبيين التسجيل في الموقع؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    نعم، يتيح الموقع للأطباء والممرضين تسجيل معلوماتهم وعرض بياناتهم للمرضى.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="500">
+                            <h2 class="accordion-header" id="faqHeadingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive">
+                                    ما هي المعلومات المطلوبة لتسجيل طبيب أو مريض؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    يتطلب تسجيل الطبيب أو المريض تقديم اسم المستخدم، البيانات الشخصية، ومعلومات الاتصال الأساسية لضمان التواصل الفعال.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="600">
+                            <h2 class="accordion-header" id="faqHeadingSix">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseSix" aria-expanded="false" aria-controls="faqCollapseSix">
+                                    كيف يمكنني التواصل مع فريق المبادرة؟
+                                </button>
+                            </h2>
+                            <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    يمكنك التواصل معنا عبر فيسبوك، واتساب، أو من خلال البريد الإلكتروني المتاح أسفل الصفحة.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">تواصل معنا</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4" data-aos="fade-right">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="mb-4">معلومات الاتصال</h4>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="contact-icon me-3 text-primary">
+                                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">العنوان</h5>
+                                    <p class="mb-0">منقباد، أسيوط، مصر</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="contact-icon me-3 text-primary">
+                                    <i class="fas fa-phone-alt fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">الهاتف</h5>
+                                    <p class="mb-0">+201060088286</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="contact-icon me-3 text-primary">
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">البريد الإلكتروني</h5>
+                                    <p class="mb-0">basemhamada641@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4" data-aos="fade-left">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="mb-4">تابعنا على</h4>
+                            <div class="social-links d-flex flex-wrap justify-content-between">
+                                <a href="https://www.facebook.com/share/1E9UeS38Wp/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f fa-2x text-primary"></i>
+                                    <span>Facebook</span>
+                                </a>
+                                <a href="https://wa.me/+201060088286" target="_blank" class="social-link">
+                                    <i class="fab fa-whatsapp fa-2x text-success"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                                <a href="https://t.me/eghathaBot" target="_blank" class="social-link">
+                                    <i class="fab fa-telegram fa-2x text-info"></i>
+                                    <span>Telegram</span>
+                                </a>
+                                <a href="https://maps.app.goo.gl/8Y2GmxzE6nrcbGbu5?g_st=aw" target="_blank" class="social-link">
+                                    <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
+                                    <span>Google Maps</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="footer-title">إغاثة</h4>
+                    <p>
+                        مبادرة إنسانية تهدف إلى تقديم الرعاية الصحية للمحتاجين في منقباد، من خلال ربطهم بالأطباء والمتخصصين المتطوعين.
+                    </p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#about"><i class="fas fa-angle-left me-2"></i> عن المبادرة</a></li>
+                        <li><a href="#hospitals"><i class="fas fa-angle-left me-2"></i> المستشفيات</a></li>
+                        <li><a href="#volunteers"><i class="fas fa-angle-left me-2"></i> المتطوعون</a></li>
+                        <li><a href="#stats"><i class="fas fa-angle-left me-2"></i> إحصائيات</a></li>
+                        <li><a href="#faq"><i class="fas fa-angle-left me-2"></i> الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <div class="footer-icons">
+                        <a href="https://www.facebook.com/share/1E9UeS38Wp/" target="_blank" class="footer-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://wa.me/+201060088286" target="_blank" class="footer-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:basemhamada641@gmail.com" class="footer-icon">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://t.me/eghathaBot" target="_blank" class="footer-icon">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://maps.app.goo.gl/8Y2GmxzE6nrcbGbu5?g_st=aw" target="_blank" class="footer-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2025 جميع الحقوق محفوظة - إغاثة | تم التطوير بواسطة فريق إغاثة</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- ملفات JavaScript -->
+    <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+        // Initialize AOS
         AOS.init({
             duration: 1000,
             once: true,
             offset: 100
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.querySelector('.preloader');
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+        
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close navbar collapse on mobile
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                }
+            });
+        });
+        
+        // Add active class to nav items when scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
