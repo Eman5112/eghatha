@@ -20,6 +20,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # بيانات تسجيل الدخول للمشرف
 ADMIN_CREDENTIALS = {"admin": "1234"}
 
+
+
 # نموذج المتطوعين
 class Volunteer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +49,11 @@ class Hospital(db.Model):
     info = db.Column(db.Text, nullable=True)  # معلومات إضافية عن المستشفى
     photo = db.Column(db.String(200), nullable=True, default='hospital_default.jpg')
 
+# نموذج الأدوية - محدث بدون حقل category
+class medicine(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    photo = db.Column(db.String(200), nullable=False, default='medicine_default.jpg')
 
 # إنشاء قاعدة البيانات
 with app.app_context():
@@ -84,6 +91,7 @@ def index():
     volunteer_count = Volunteer.query.count()
     visitor_count = Visitor.query.count()
     hospital_count = Hospital.query.count()
+    medicine_count = medicine.query.count()  # إضافة عدد الأدوية
     hospitals = Hospital.query.all()
 
     if specialization:
@@ -92,7 +100,8 @@ def index():
         volunteers = Volunteer.query.all()
 
     return render_template('index.html', volunteers=volunteers, volunteer_count=volunteer_count, 
-                          visitor_count=visitor_count, hospitals=hospitals, hospital_count=hospital_count)
+                          visitor_count=visitor_count, hospitals=hospitals, hospital_count=hospital_count,
+                          medicine_count=medicine_count)  # تمرير عدد الأدوية
 
 ### 🔹 تسجيل المتطوعين
 @app.route('/register', methods=['GET', 'POST'])
@@ -206,6 +215,64 @@ def delete_hospital(hospital_id):
     flash("تم حذف المستشفى بنجاح!", "success")
     return redirect(url_for('dashboard'))
 
+
+# صفحة عرض جميع الأدوية
+@app.route('/medicines')
+def medicines():
+    """صفحة عرض جميع الأدوية"""
+    all_medicines = medicine.query.all()
+    return render_template('medicines.html', medicines=all_medicines)
+
+# إضافة الأدوية - محدث بدون حقل category
+@app.route('/add_medicine', methods=['GET', 'POST'])
+def add_medicine():
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+        
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        photo = request.files.get('photo')
+
+        # التحقق من وجود اسم الدواء
+        if not name:
+            flash("يجب إدخال اسم الدواء!", "danger")
+            return render_template('add_medicine.html')
+
+        filename = 'medicine_default.jpg'
+        if photo and photo.filename != '':
+            filename = secure_filename(photo.filename)
+            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            photo.save(photo_path)
+
+        try:
+            # إنشاء دواء جديد بدون حقل category
+            new_medicine = medicine(
+                name=name,  
+                photo=filename
+            )
+            db.session.add(new_medicine)
+            db.session.commit()
+            flash("تم إضافة الدواء بنجاح!", "success")
+            return redirect(url_for('dashboard'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"حدث خطأ: {str(e)}", "danger")
+            return render_template('add_medicine.html')
+
+    return render_template('add_medicine.html')
+
+# حذف الأدوية
+@app.route('/delete_medicine/<int:medicine_id>')
+def delete_medicine(medicine_id):
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+        
+    medicine = medicine.query.get_or_404(medicine_id)
+    db.session.delete(medicine)
+    db.session.commit()
+    flash("تم حذف الدواء بنجاح!", "success")
+    return redirect(url_for('dashboard'))
+
 ### 🔹 تسجيل دخول المشرف
 @app.route('/admin', methods=['GET', 'POST'])
 def admin_login():
@@ -221,6 +288,7 @@ def admin_login():
 
     return render_template('admin.html')
 
+
 ### 🔹 لوحة تحكم المشرف
 @app.route('/dashboard')
 def dashboard():
@@ -228,9 +296,21 @@ def dashboard():
         volunteers = Volunteer.query.all()
         visitors = Visitor.query.all()
         hospitals = Hospital.query.all()
-        return render_template('dashboard.html', volunteers=volunteers, visitors=visitors, hospitals=hospitals)
+        medicines = medicine.query.all()  # إضافة الأدوية
+        return render_template('dashboard.html', volunteers=volunteers, visitors=visitors, 
+                             hospitals=hospitals, medicines=medicines)
 
     return redirect(url_for('admin_login'))
+
+@app.route('/all-volunteers')
+def all_volunteers():
+    """Route to display all volunteers."""
+    # Get all volunteers from the database
+    all_volunteers = Volunteer.query.all()
+    
+    return render_template('all_volunteers.html', 
+                          volunteers=all_volunteers,
+                          page_title="كل المتطوعين")
 
 ### 🔹 تعديل بيانات المتطوع
 @app.route('/edit/<int:volunteer_id>', methods=['GET', 'POST'])
@@ -261,6 +341,8 @@ def delete_volunteer(volunteer_id):
         return redirect(url_for('dashboard'))
 
     return redirect(url_for('admin_login'))
+
+
 
 ### تشغيل التطبيق
 if __name__ == '__main__':
